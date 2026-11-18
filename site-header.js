@@ -116,6 +116,6 @@
       script.addEventListener('error',resolve,{once:true});
       document.head.append(script);
     });
-    Promise.all([load('media-previews.js'),load('local-media.js')]).then(initMedia);
+    Promise.all([load('media-previews.js'),load('local-media.js?v=fast-1')]).then(initMedia);
   }
 })();

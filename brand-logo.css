@@ -1,5 +1,5 @@
-@import url('roof-service-override.css');
-@import url('local-media.css');
+@import url('roof-service-override.css?v=fast-1');
+@import url('local-media.css?v=fast-1');
 @import url('report-interactions.css');
 
 /* Предоставленный логотип: без обрезки и только в верхней навигации. */
