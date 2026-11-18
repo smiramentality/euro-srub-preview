@@ -31,6 +31,52 @@
   });
 })();
 
+(() => {
+  const header=document.querySelector('header.site-header');
+  const bar=header?.querySelector('.nav');
+  const navigation=bar?.querySelector('nav');
+  if(!navigation)return;
+
+  const phone=bar.querySelector('a[href^="tel:"]');
+  const afterPhone=phone?.nextSibling;
+  const mobile=window.matchMedia('(max-width: 900px)');
+  const toggle=document.createElement('button');
+  toggle.type='button';
+  toggle.className='mobile-menu-toggle';
+  toggle.textContent='Меню';
+  navigation.id ||= 'site-navigation';
+  toggle.setAttribute('aria-controls',navigation.id);
+  if(phone&&!phone.hasAttribute('aria-label')){
+    phone.setAttribute('aria-label',`Позвонить в Евро-Сруб: ${phone.textContent.trim()}`);
+  }
+  navigation.before(toggle);
+  header.classList.add('has-mobile-menu');
+
+  function setOpen(isOpen,restoreFocus=false){
+    toggle.setAttribute('aria-expanded',String(isOpen));
+    header.classList.toggle('mobile-menu-open',isOpen);
+    if(restoreFocus)toggle.focus();
+  }
+  function syncLayout(){
+    setOpen(false);
+    if(!phone)return;
+    if(mobile.matches)toggle.before(phone);
+    else bar.insertBefore(phone,afterPhone??null);
+  }
+  syncLayout();
+  mobile.addEventListener('change',syncLayout);
+  toggle.addEventListener('click',()=>setOpen(!header.classList.contains('mobile-menu-open')));
+  navigation.addEventListener('click',event=>{
+    if(mobile.matches&&event.target.closest('a'))setOpen(false);
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&header.classList.contains('mobile-menu-open'))setOpen(false,true);
+  });
+  document.addEventListener('pointerdown',event=>{
+    if(header.classList.contains('mobile-menu-open')&&!header.contains(event.target))setOpen(false);
+  });
+})();
+
 /* Local media first: replaces archived external photos with files bundled in this build.
    New cards created by filters are handled through MutationObserver as well. */
 (() => {
