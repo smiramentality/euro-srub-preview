@@ -922,3 +922,10 @@ window.EURO_LOCAL_MEDIA={
   "https://www.evro-srub.ru/images/37/IMG-20220908-WA0002.jpg": "assets/media/4fba390ac0e398b0743c.jpg"
 };
 window.localMedia=url=>window.EURO_LOCAL_MEDIA[url]||url;
+window.previewMedia=url=>{
+  const source=window.localMedia(url);
+  const prefix='assets/media/';
+  if(typeof source!=='string'||!source.startsWith(prefix))return source;
+  const name=source.slice(prefix.length);
+  return window.EURO_MEDIA_PREVIEWS?.has(name)?`assets/fast/media/${name}`:source;
+};

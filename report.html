@@ -19,8 +19,8 @@
         <div class="report-location" id="location"></div>
       </div>
       <figure class="report-media">
-        <img class="report-main-image" id="heroImage" src="" alt="">
-        <figcaption class="report-media-meta"><span id="photoCaption">Фотография объекта из архива Евро‑Сруб</span><span class="report-media-controls"><b id="photoCounter">01 / 01</b><button type="button" id="previousPhoto" aria-label="Предыдущая фотография">‹</button><button type="button" id="nextPhoto" aria-label="Следующая фотография">›</button></span></figcaption>
+        <img class="report-main-image" id="heroImage" alt="" fetchpriority="high" decoding="async">
+        <figcaption class="report-media-meta"><a id="photoCaption" target="_blank" rel="noopener">Оригинал фотографии ↗</a><span class="report-media-controls"><b id="photoCounter">01 / 01</b><button type="button" id="previousPhoto" aria-label="Предыдущая фотография">‹</button><button type="button" id="nextPhoto" aria-label="Следующая фотография">›</button></span></figcaption>
       </figure>
       <div class="report-case-data">
         <div class="report-facts" id="heroFacts"></div>
@@ -60,6 +60,8 @@
 
   <footer class="footer"><div class="shell"><span>Евро‑Сруб · архив работ</span><a href="works.html">Все фоторепортажи</a></div></footer>
 
+  <script src="media-previews.js"></script>
+  <script src="local-media.js"></script>
   <script src="reports-data.js"></script>
   <script>
     const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
@@ -81,7 +83,11 @@
     /* The official report cover is the finished / most representative object view.
        Put it first, while keeping every original gallery photo available below. */
     const coverPhoto=report[3]||sourcePhotos[0];
-    const photos=[coverPhoto,...sourcePhotos.filter(photo=>photo!==coverPhoto)];
+    const originalCover=localMedia(coverPhoto);
+    const photos=[originalCover,...sourcePhotos.filter(photo=>photo!==coverPhoto).map(photo=>{
+      const original=localMedia(photo);
+      return original===photo&&/^https?:/.test(photo)?originalCover:original;
+    })];
     const meta=details.split(' · ').map(item=>item.trim()).filter(Boolean);
     const region=meta.shift()||'';
     const place=meta.shift()||'';
@@ -127,17 +133,18 @@
     document.querySelector('#galleryTitle').textContent=`Фотографии объекта: ${title}`;
     document.querySelector('#galleryLead').textContent=`В архиве — ${photos.length} ${photos.length===1?'оригинальная фотография':'оригинальных фотографий'} этого объекта.`;
     const galleryGrid=document.querySelector('#galleryGrid');
-    galleryGrid.innerHTML=photos.map((src,index)=>`<button class="report-gallery-card" type="button" data-gallery-index="${index}" aria-label="Показать фото ${index+1}: ${esc(title)}"><img src="${esc(src)}" alt="${esc(title)} — фото ${index+1}" loading="lazy" referrerpolicy="no-referrer"></button>`).join('');
-    document.querySelector('#sideGallery').innerHTML=photos.slice(1,4).map((src,index)=>`<img src="${esc(src)}" alt="${esc(title)} — фото ${index+2}" loading="lazy" referrerpolicy="no-referrer">`).join('')||`<img src="${esc(photos[0])}" alt="${esc(title)}" loading="lazy" referrerpolicy="no-referrer">`;
+    galleryGrid.innerHTML=photos.map((src,index)=>`<button class="report-gallery-card" type="button" data-gallery-index="${index}" aria-label="Показать фото ${index+1}: ${esc(title)}"><img decoding="async" src="${esc(previewMedia(src))}" alt="${esc(title)} — фото ${index+1}" loading="lazy" referrerpolicy="no-referrer"></button>`).join('');
+    document.querySelector('#sideGallery').innerHTML=photos.slice(1,4).map((src,index)=>`<img decoding="async" src="${esc(previewMedia(src))}" alt="${esc(title)} — фото ${index+2}" loading="lazy" referrerpolicy="no-referrer">`).join('')||`<img decoding="async" src="${esc(previewMedia(photos[0]))}" alt="${esc(title)}" loading="lazy" referrerpolicy="no-referrer">`;
     let activePhoto=0;
     const heroImage=document.querySelector('#heroImage');
-    const updateHeroPhoto=()=>{heroImage.src=photos[activePhoto];heroImage.alt=`${title} — фото ${activePhoto+1}`;document.querySelector('#photoCounter').textContent=`${String(activePhoto+1).padStart(2,'0')} / ${String(photos.length).padStart(2,'0')}`};
+    const photoOriginal=document.querySelector('#photoCaption');
+    const updateHeroPhoto=()=>{heroImage.src=previewMedia(photos[activePhoto]);heroImage.alt=`${title} — фото ${activePhoto+1}`;photoOriginal.href=photos[activePhoto];document.querySelector('#photoCounter').textContent=`${String(activePhoto+1).padStart(2,'0')} / ${String(photos.length).padStart(2,'0')}`};
     document.querySelector('#previousPhoto').addEventListener('click',()=>{activePhoto=(activePhoto-1+photos.length)%photos.length;updateHeroPhoto()});
     document.querySelector('#nextPhoto').addEventListener('click',()=>{activePhoto=(activePhoto+1)%photos.length;updateHeroPhoto()});
     galleryGrid.addEventListener('click',event=>{const card=event.target.closest('[data-gallery-index]');if(!card)return;activePhoto=Number(card.dataset.galleryIndex);updateHeroPhoto();document.querySelector('#reportHero').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
     updateHeroPhoto();
     const related=EURO_REPORTS.map((item,index)=>({item,index})).filter(entry=>entry.index!==number&&entry.item[2]===category).slice(0,3);
-    document.querySelector('#similarGrid').innerHTML=related.map(({item,index})=>{const info=(item[1]||'').split(' · ')[0];const image=(item[5]&&item[5][0])||item[3];return `<a class="report-similar-card" href="report.html?report=${index}#reportHero"><img src="${esc(image)}" alt="${esc(item[0])}" loading="lazy" referrerpolicy="no-referrer"><small>${esc(info)}</small><h3>${esc(item[0])}</h3><p>${esc((item[1]||'').split(' · ').slice(1).join(' · '))}</p><span>Смотреть проект</span></a>`}).join('');
+    document.querySelector('#similarGrid').innerHTML=related.map(({item,index})=>{const info=(item[1]||'').split(' · ')[0];const image=item[3]||(item[5]&&item[5][0]);return `<a class="report-similar-card" href="report.html?report=${index}#reportHero"><img decoding="async" src="${esc(previewMedia(image))}" alt="${esc(item[0])}" loading="lazy" referrerpolicy="no-referrer"><small>${esc(info)}</small><h3>${esc(item[0])}</h3><p>${esc((item[1]||'').split(' · ').slice(1).join(' · '))}</p><span>Смотреть проект</span></a>`}).join('');
   </script>
 </body>
 </html>

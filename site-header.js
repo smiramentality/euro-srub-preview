@@ -22,9 +22,7 @@
 
   links.forEach((link) => link.addEventListener('click', (event) => {
     if (link === active || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
     place(link, !reducedMotion);
-    window.setTimeout(() => window.location.assign(link.href), reducedMotion ? 0 : 430);
   }));
 
   window.addEventListener('resize', () => {
@@ -36,15 +34,12 @@
 /* Local media first: replaces archived external photos with files bundled in this build.
    New cards created by filters are handled through MutationObserver as well. */
 (() => {
-  const loader=document.createElement('script');
-  loader.src='local-media.js';
-  loader.async=false;
-
-  loader.addEventListener('load',()=>{
+  const initMedia=()=>{
     const local=window.localMedia;
     if(typeof local!=='function')return;
 
     const replaceValue=value=>local(value)||value;
+    const previewValue=value=>window.previewMedia(value)||value;
     const remapData=()=>{
       (window.EURO_REPORTS||[]).forEach(report=>{
         const cover=report[3]&&replaceValue(report[3]);
@@ -62,17 +57,25 @@
     const hydrateImage=image=>{
       if(!(image instanceof HTMLImageElement))return;
       const source=image.getAttribute('src');
-      const replacement=source&&replaceValue(source);
+      const replacement=source&&(image.closest('dialog')||image.dataset.previewFailed?replaceValue(source):previewValue(source));
       if(replacement&&replacement!==source)image.setAttribute('src',replacement);
       image.decoding='async';
-      if(!image.hasAttribute('loading'))image.loading='lazy';
-      if(image.matches('.page-hero img, .report-main-image, .detail-art img'))image.fetchPriority='high';
+      if(image.matches('.page-hero img, .report-main-image, .detail-art img')){
+        image.loading='eager';
+        image.fetchPriority='high';
+      }else if(!image.hasAttribute('loading'))image.loading='lazy';
       if(!image.dataset.localFallback){
         image.dataset.localFallback='true';
         image.addEventListener('error',()=>{
+          const failed=image.getAttribute('src');
+          if(failed?.startsWith('assets/fast/media/')){
+            image.dataset.previewFailed='true';
+            image.src=failed.replace('assets/fast/media/','assets/media/');
+            return;
+          }
           if(image.dataset.fallbackApplied)return;
           image.dataset.fallbackApplied='true';
-          image.src='assets/hero-timber-home.png';
+          image.src='assets/fast/hero-timber-home.jpg';
         });
       }
     };
@@ -80,7 +83,7 @@
       const value=element.style.backgroundImage;
       if(!value)return;
       element.style.backgroundImage=value.replace(/url\(["']?([^"')]+)["']?\)/g,(match,url)=>{
-        const replacement=replaceValue(url);
+        const replacement=previewValue(url);
         return replacement===url?match:`url("${replacement}")`;
       });
     };
@@ -102,6 +105,17 @@
       record.addedNodes.forEach(hydrate);
       if(record.type==='attributes')hydrate(record.target);
     })).observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['src','style']});
-  });
-  document.head.append(loader);
+  };
+  if(typeof window.localMedia==='function'){
+    initMedia();
+  }else{
+    const load=src=>new Promise(resolve=>{
+      const script=document.createElement('script');
+      script.src=src;
+      script.addEventListener('load',resolve,{once:true});
+      script.addEventListener('error',resolve,{once:true});
+      document.head.append(script);
+    });
+    Promise.all([load('media-previews.js'),load('local-media.js')]).then(initMedia);
+  }
 })();

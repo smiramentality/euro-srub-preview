@@ -1,5 +1,5 @@
 /* Один тематический кадр для карточки и hero услуги кровли. */
 .service-page.service--roof .detail-art{
-  background-image:url('assets/service-roof-v1.png') !important;
+  background-image:url('assets/fast/service-roof-v1.jpg') !important;
   background-position:center;
 }

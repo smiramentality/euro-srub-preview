@@ -68,7 +68,7 @@
 .company-coverage__pin{position:absolute;width:9px;height:9px;border:1px solid #f5e4bc;border-radius:50%;background:#c99a5d;box-shadow:0 0 0 5px rgba(201,154,93,.16)}
 .company-coverage__pin--01{left:27%;top:41%}.company-coverage__pin--02{left:31%;top:37%}.company-coverage__pin--03{left:29%;top:47%}.company-coverage__pin--04{left:24%;top:48%}.company-coverage__pin--05{left:21%;top:52%}.company-coverage__pin--06{left:34%;top:45%}
 .company-coverage__map-note{position:absolute;left:13%;bottom:27px;padding-left:13px;border-left:1px solid #e3c385;color:#ebd7ae;font:500 19px/1.16 'Playfair Display',Georgia,serif}
-.company-coverage{position:relative;overflow:hidden;padding:0;background:#073a28 url('assets/about-chukhloma-ring-v1.png') center/cover no-repeat}
+.company-coverage{position:relative;overflow:hidden;padding:0;background:#073a28 url('assets/fast/about-chukhloma-ring-v1.jpg') center/cover no-repeat}
 .company-coverage::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(4,47,33,.12) 0%,rgba(4,47,33,.18) 43%,rgba(4,47,33,.72) 76%,rgba(4,47,33,.88) 100%),radial-gradient(circle at 79% 14%,rgba(33,93,69,.24),transparent 33%)}
 .company-coverage__inside{position:relative;z-index:1;grid-template-columns:1.08fr .92fr;gap:clamp(46px,6vw,100px);min-height:510px;padding:0;align-items:center}
 .company-origin-minimal{position:relative;isolation:isolate;display:flex;align-self:stretch;min-height:510px;padding:56px 0 49px;overflow:hidden;flex-direction:column;justify-content:flex-end;color:#f5f1e8}
