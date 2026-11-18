@@ -1,0 +1,24 @@
+@import url('roof-service-override.css');
+@import url('local-media.css');
+@import url('report-interactions.css');
+
+/* Предоставленный логотип: без обрезки и только в верхней навигации. */
+.top .brand{
+  display:block;
+  flex:0 0 190px;
+  width:190px;
+  height:60px;
+  overflow:hidden;
+  border:0;
+  background:transparent url('assets/euro-srub-logo.png') center / calc(100% - 8px) auto no-repeat;
+  color:transparent;
+  font-size:0;
+  letter-spacing:0;
+  text-indent:-9999px;
+}
+.top .brand span{font-size:0}
+.nav nav a[href="about.html"]{order:5}
+.nav nav a[href="contacts.html"]{order:6}
+@media(max-width:760px){
+  .top .brand{flex-basis:156px;width:156px;height:50px;background-size:calc(100% - 6px) auto}
+}

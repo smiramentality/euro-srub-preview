@@ -1,0 +1,100 @@
+/* Редакционная подача страницы о компании: реальные объекты, процесс и доказательства. */
+.company-page{padding-top:64px}
+.company-page .eyebrow{color:#ad7133}
+.company-page .company-coverage .eyebrow{color:#e7c581}
+.company-opening,.company-process__heading,.company-reports__heading{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:64px;align-items:end}
+.company-opening h2,.company-process h2,.company-reports h2{margin:13px 0 0;font:500 clamp(40px,4.6vw,60px)/1.02 'Playfair Display',Georgia,serif;letter-spacing:-.045em}
+.company-opening__copy{max-width:360px;color:#59675e;font-size:16px;line-height:1.65}
+.company-opening__copy p{margin:0 0 14px}
+.company-proof--editorial{margin:52px 0 108px}
+.company-proof--editorial .company-proof__item{position:relative;padding:32px 34px 31px}
+.company-proof--editorial .company-proof__item:first-child{padding-left:0}
+.company-proof--editorial .company-proof__item b{color:#16392a}
+.company-proof--editorial .company-proof__item span{max-width:205px}
+.company-story{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(42px,6vw,92px);align-items:center;margin-bottom:120px}
+.company-story__copy h2{margin:13px 0 22px;font:500 clamp(38px,4vw,54px)/1.04 'Playfair Display',Georgia,serif;letter-spacing:-.045em}
+.company-story__copy p{max-width:510px;margin:0;color:#59675e;font-size:16px;line-height:1.68}
+.company-story blockquote{max-width:430px;margin:30px 0 0;padding-left:19px;border-left:1px solid #b98c55;color:#254234;font:500 20px/1.38 'Playfair Display',Georgia,serif}
+.company-text-link{display:inline-flex;align-items:center;gap:14px;margin-top:22px;padding-bottom:10px;border-bottom:1px solid #b98c55;color:#18362a;font-size:13px;font-weight:700}
+.company-text-link::after{content:'→';color:#b98c55;font-size:19px;transition:transform 220ms ease}
+.company-text-link:hover::after{transform:translateX(5px)}
+.company-process{padding:56px 0 64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.company-process__heading p,.company-reports__heading p{max-width:360px;margin:0;color:#59675e;font-size:15px;line-height:1.65}
+.company-process__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+.company-process__step{overflow:hidden;background:#f3f0e9}
+.company-process__step img{display:block;width:100%;height:156px;object-fit:cover;filter:saturate(.82)}
+.company-process__step>div{padding:19px 19px 22px}
+.company-process__step b{color:#b98c55;font:500 18px/1 'Playfair Display',Georgia,serif}
+.company-process__step h3{margin:12px 0 8px;color:#173427;font:500 26px/1.12 'Playfair Display',Georgia,serif;letter-spacing:-.03em}
+.company-process__step p{margin:0;color:#637067;font-size:12px;line-height:1.58}
+.company-reports{padding-top:108px}
+.company-reports__grid{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:16px;margin-top:43px}
+.company-report{position:relative;isolation:isolate;display:flex;min-height:300px;overflow:hidden;padding:25px;color:#fff;background:#173427;flex-direction:column;justify-content:flex-end}
+.company-report::after{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(180deg,rgba(7,32,23,.04) 19%,rgba(7,32,23,.86) 100%)}
+.company-report img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 500ms ease}
+.company-report span{margin-bottom:10px;color:#e5c98f;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.company-report strong{max-width:250px;font:500 clamp(28px,2.4vw,39px)/1.05 'Playfair Display',Georgia,serif;letter-spacing:-.04em}
+.company-report i{position:absolute;top:25px;right:24px;color:#e5c98f;font:400 28px/1 Georgia,serif;font-style:normal}
+.company-report:focus-visible{outline:2px solid #b98c55;outline-offset:4px}
+.company-text-link--all{margin-top:24px}
+@media(hover:hover) and (pointer:fine){.company-report:hover img{transform:scale(1.04)}.company-report:hover strong{color:#f0d7a3}}
+@media(max-width:760px){
+  .company-page{padding-top:44px}
+  .company-opening,.company-process__heading,.company-reports__heading,.company-story{grid-template-columns:1fr;gap:24px}
+  .company-opening__copy{max-width:none}
+  .company-proof--editorial{margin:42px 0 66px}
+  .company-story{margin-bottom:72px}
+  .company-story blockquote{font-size:18px}
+  .company-process{padding:40px 0 44px}
+  .company-process__grid{grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+  .company-process__step img{height:116px}
+  .company-process__step>div{padding:15px}
+  .company-process__step h3{font-size:22px}
+  .company-reports{padding-top:68px}
+  .company-reports__grid{grid-template-columns:1fr;gap:12px;margin-top:28px}
+  .company-report{min-height:270px}
+}
+
+/* Визуальные опоры: ремесло вместо фасада и карта вместо перечня регионов. */
+.company-story__art{position:relative;min-height:270px;margin:0;overflow:hidden;background:#173427}
+.company-story__art::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,30,21,0) 48%,rgba(8,30,21,.78) 100%);pointer-events:none}
+.company-story__art img{display:block;width:100%;height:100%;object-fit:cover}
+.company-story__art figcaption{position:absolute;z-index:1;bottom:0;left:0;display:flex;align-items:flex-end;gap:16px;padding:23px 25px;color:#f4efe5;font:500 17px/1.25 'Playfair Display',Georgia,serif}
+.company-story__art figcaption span{color:#e1bf86;font:500 38px/1 'Playfair Display',Georgia,serif}
+.company-coverage__inside{align-items:center}
+.company-coverage__map{position:relative;min-height:320px;overflow:hidden}
+.company-coverage__map::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 24% 50%,rgba(214,176,113,.18),transparent 29%);pointer-events:none}
+.company-coverage__map img{display:block;width:100%;height:320px;object-fit:contain;object-position:center;opacity:.78;filter:invert(92%) sepia(14%) saturate(570%) hue-rotate(345deg) brightness(94%) contrast(88%)}
+.company-coverage__pin{position:absolute;width:9px;height:9px;border:1px solid #f5e4bc;border-radius:50%;background:#c99a5d;box-shadow:0 0 0 5px rgba(201,154,93,.16)}
+.company-coverage__pin--01{left:27%;top:41%}.company-coverage__pin--02{left:31%;top:37%}.company-coverage__pin--03{left:29%;top:47%}.company-coverage__pin--04{left:24%;top:48%}.company-coverage__pin--05{left:21%;top:52%}.company-coverage__pin--06{left:34%;top:45%}
+.company-coverage__map-note{position:absolute;left:13%;bottom:27px;padding-left:13px;border-left:1px solid #e3c385;color:#ebd7ae;font:500 19px/1.16 'Playfair Display',Georgia,serif}
+.company-coverage{position:relative;overflow:hidden;padding:0;background:#073a28 url('assets/about-chukhloma-ring-v1.png') center/cover no-repeat}
+.company-coverage::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(4,47,33,.12) 0%,rgba(4,47,33,.18) 43%,rgba(4,47,33,.72) 76%,rgba(4,47,33,.88) 100%),radial-gradient(circle at 79% 14%,rgba(33,93,69,.24),transparent 33%)}
+.company-coverage__inside{position:relative;z-index:1;grid-template-columns:1.08fr .92fr;gap:clamp(46px,6vw,100px);min-height:510px;padding:0;align-items:center}
+.company-origin-minimal{position:relative;isolation:isolate;display:flex;align-self:stretch;min-height:510px;padding:56px 0 49px;overflow:hidden;flex-direction:column;justify-content:flex-end;color:#f5f1e8}
+.company-origin-minimal::before{display:none}
+.company-origin-minimal::after{content:'';position:absolute;z-index:-1;left:-132px;top:-143px;width:810px;height:810px;border:1px solid #d9a75e;border-radius:50%;opacity:.94}
+.company-origin-minimal strong{position:relative;z-index:1;max-width:620px;margin-left:20px;font:500 clamp(74px,9vw,132px)/.82 'Playfair Display',Georgia,serif;letter-spacing:-.085em;text-shadow:0 1px 0 rgba(255,255,255,.05)}
+.company-origin-minimal__place{position:relative;z-index:1;margin:21px 0 0 225px;color:#dbe5dd;font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
+.company-origin-minimal__meta{position:relative;z-index:1;display:flex;gap:0;max-width:530px;margin:68px 0 0 20px;padding-top:22px;border-top:1px solid rgba(226,180,102,.68)}
+.company-origin-minimal__meta span{flex:1;padding-right:25px;color:#f5f1e8;font-size:12px;line-height:1.45}
+.company-origin-minimal__meta span+span{padding-right:0;padding-left:25px;border-left:1px solid rgba(226,180,102,.68)}
+@media(max-width:760px){
+  .company-story__art{min-height:220px}
+  .company-story__art figcaption{padding:18px;font-size:15px}
+  .company-story__art figcaption span{font-size:31px}
+  .company-coverage__map{min-height:230px}
+  .company-coverage__map img{height:230px}
+  .company-coverage__map-note{left:10px;bottom:16px;font-size:17px}
+  .company-coverage{padding:0}
+  .company-coverage{background-position:31% center}
+  .company-coverage__inside{min-height:0;padding:0;gap:0}
+  .company-origin-minimal{min-height:310px;padding:34px 20px 25px}
+  .company-origin-minimal::before{left:-120px;top:-166px;width:510px;height:510px}
+  .company-origin-minimal::after{left:-80px;top:-88px;width:530px;height:530px}
+  .company-origin-minimal strong{margin-left:0;font-size:64px}
+  .company-origin-minimal__place{margin:16px 0 0 72px;font-size:9px;letter-spacing:.18em}
+  .company-origin-minimal__meta{max-width:none;margin:42px 0 0;padding-top:16px}
+  .company-origin-minimal__meta span{font-size:10px;padding-right:14px}
+  .company-origin-minimal__meta span+span{padding-left:14px}
+}

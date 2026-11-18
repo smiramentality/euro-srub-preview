@@ -1,0 +1,52 @@
+/* Премиальная атмосферная подложка архива: только CSS, без тяжёлых текстур. */
+main.dark{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:
+    radial-gradient(78% 55% at 13% 2%,rgba(42,105,83,.72) 0%,rgba(26,79,63,.44) 33%,rgba(13,51,43,0) 72%),
+    radial-gradient(52% 38% at 57% 19%,rgba(41,102,80,.31) 0%,rgba(13,51,43,0) 75%),
+    radial-gradient(70% 48% at 50% 108%,rgba(4,26,21,.63) 0%,rgba(13,51,43,0) 71%),
+    linear-gradient(125deg,#195345 0%,#124638 38%,#0d332b 72%,#08271f 100%);
+}
+main.dark::before{
+  content:'';
+  position:absolute;
+  z-index:-1;
+  inset:-12%;
+  opacity:.2;
+  transform:rotate(-8deg) scale(1.08);
+  filter:blur(22px);
+  background:
+    radial-gradient(ellipse 18% 42% at 13% 14%,rgba(173,216,180,.34) 0%,rgba(173,216,180,0) 72%),
+    radial-gradient(ellipse 12% 37% at 24% 22%,rgba(173,216,180,.22) 0%,rgba(173,216,180,0) 70%),
+    radial-gradient(ellipse 17% 45% at 74% 72%,rgba(0,14,10,.42) 0%,rgba(0,14,10,0) 75%),
+    radial-gradient(ellipse 14% 36% at 88% 39%,rgba(0,14,10,.32) 0%,rgba(0,14,10,0) 72%);
+  pointer-events:none;
+}
+main.dark::after{
+  content:'';
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  opacity:.032;
+  background-image:
+    radial-gradient(rgba(250,246,233,.9) .55px,transparent .72px),
+    radial-gradient(rgba(0,0,0,.9) .5px,transparent .68px);
+  background-position:0 0,3px 4px;
+  background-size:6px 6px,7px 7px;
+  pointer-events:none;
+}
+main.dark>.shell{position:relative;z-index:1}
+main.dark .case{
+  border:1px solid rgba(231,217,186,.27);
+  box-shadow:0 16px 36px rgba(2,20,15,.2);
+}
+main.dark .official-work{
+  border:1px solid rgba(231,217,186,.12);
+  box-shadow:0 12px 28px rgba(2,20,15,.13);
+}
+@media(max-width:760px){
+  main.dark::before{opacity:.15;filter:blur(18px)}
+  main.dark .case{box-shadow:0 10px 24px rgba(2,20,15,.18)}
+}

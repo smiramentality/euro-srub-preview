@@ -1,0 +1,33 @@
+/* Единый компактный hero-шаблон для главных разделов. */
+.page-hero.section-hero{
+  min-height:500px !important;
+  padding:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  color:#fff;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+  background-size:cover !important;
+}
+.page-hero.section-hero .shell{width:min(690px,calc(100% - 64px));margin:0 0 0 clamp(32px,8vw,164px);padding-top:54px !important;padding-bottom:54px !important}
+.page-hero.section-hero .eyebrow{display:flex;align-items:center;gap:16px;color:#dfc497;font-size:10px;letter-spacing:.2em}
+.page-hero.section-hero h1{max-width:690px;margin:20px 0;color:#f7f2e9;font-size:clamp(44px,4.6vw,64px) !important;line-height:1.04;letter-spacing:-.04em}
+.page-hero.section-hero p{max-width:590px;margin:0;color:rgba(239,243,237,.9);font-size:16px;line-height:1.65}
+.section-hero--about{background-image:linear-gradient(90deg,rgba(4,34,24,.96) 0%,rgba(7,42,30,.84) 38%,rgba(7,42,30,.34) 61%,rgba(7,42,30,0) 82%),url('assets/hero-about-v2.png') !important}
+.section-hero--catalog{background-image:linear-gradient(90deg,rgba(4,34,24,.96) 0%,rgba(7,42,30,.84) 38%,rgba(7,42,30,.34) 61%,rgba(7,42,30,0) 82%),url('assets/hero-catalog-v2.png') !important}
+.section-hero--services{background-image:linear-gradient(90deg,rgba(4,34,24,.96) 0%,rgba(7,42,30,.84) 38%,rgba(7,42,30,.34) 61%,rgba(7,42,30,0) 82%),url('assets/hero-services-v2.png') !important}
+.section-hero--works{background-image:linear-gradient(90deg,rgba(4,34,24,.96) 0%,rgba(7,42,30,.84) 38%,rgba(7,42,30,.34) 61%,rgba(7,42,30,0) 82%),url('assets/hero-works-v2.png') !important}
+.section-hero--contacts{background-image:linear-gradient(90deg,rgba(4,34,24,.96) 0%,rgba(7,42,30,.84) 38%,rgba(7,42,30,.34) 61%,rgba(7,42,30,0) 82%),url('assets/hero-contacts-v2.png') !important}
+.section-hero--catalog .catalog-hero-facts{display:none !important}
+@media(max-width:760px){
+  .page-hero.section-hero{min-height:430px !important;background-position:64% center !important}
+  .page-hero.section-hero .shell{width:auto;margin:0 20px;padding-top:48px !important;padding-bottom:48px !important}
+  .page-hero.section-hero h1{font-size:clamp(40px,10vw,52px) !important}
+  .page-hero.section-hero p{font-size:15px}
+  .page-hero.section-hero .eyebrow{font-size:9px;letter-spacing:.16em;gap:10px}
+  .section-hero--about{background-image:linear-gradient(90deg,rgba(4,34,24,.97) 0%,rgba(7,42,30,.91) 50%,rgba(7,42,30,.64) 100%),url('assets/hero-about-v2.png') !important}
+  .section-hero--catalog{background-image:linear-gradient(90deg,rgba(4,34,24,.97) 0%,rgba(7,42,30,.91) 50%,rgba(7,42,30,.64) 100%),url('assets/hero-catalog-v2.png') !important}
+  .section-hero--services{background-image:linear-gradient(90deg,rgba(4,34,24,.97) 0%,rgba(7,42,30,.91) 50%,rgba(7,42,30,.64) 100%),url('assets/hero-services-v2.png') !important}
+  .section-hero--works{background-image:linear-gradient(90deg,rgba(4,34,24,.97) 0%,rgba(7,42,30,.91) 50%,rgba(7,42,30,.64) 100%),url('assets/hero-works-v2.png') !important}
+  .section-hero--contacts{background-image:linear-gradient(90deg,rgba(4,34,24,.97) 0%,rgba(7,42,30,.91) 50%,rgba(7,42,30,.64) 100%),url('assets/hero-contacts-v2.png') !important}
+}

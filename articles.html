@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Статьи — Евро-Сруб</title>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="section-heroes.css">
+  <style>
+    .top { height: 78px; }
+    .top .nav { min-height: 78px; height: 78px; }
+    .journal-hero {
+      min-height: 0;
+      height: auto;
+      padding: 82px 0 62px;
+      display: flex;
+      align-items: initial;
+      background-image:
+        linear-gradient(90deg, rgba(3,40,29,.95) 0%, rgba(3,40,29,.82) 30%, rgba(3,40,29,.35) 52%, rgba(3,40,29,0) 72%),
+        url('assets/articles-hero-editorial.png');
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      color: #f6f1e9;
+    }
+    .journal-hero .shell { width: min(1240px, 100%); margin: auto; padding: 0 32px; }
+    .journal-hero .shell.journal-hero__content { width: min(690px, calc(100% - 64px)); max-width: 690px; margin: 0 0 0 clamp(32px, 12vw, 220px); padding: 0; }
+    .journal-hero__label { display: block; margin: 0; color: #dfc497; font: 600 10px/1 Manrope, sans-serif; letter-spacing: .16em; text-transform: uppercase; }
+    .journal-hero h1 { max-width: 690px; margin: 16px 0; color: #f7f2e9; font: 500 clamp(42px, 5vw, 54px)/1.05 'Playfair Display', Georgia, serif; letter-spacing: -.035em; }
+    .journal-hero p { max-width: 650px; margin: 0; color: #e1e8e2; font: 400 16px/1.65 Manrope, sans-serif; }
+    .journal-hero.section-hero { min-height: 500px; height: 500px; padding: 0; align-items: center; background-image: linear-gradient(90deg, rgba(4,34,24,.96) 0%, rgba(7,42,30,.84) 38%, rgba(7,42,30,.34) 61%, rgba(7,42,30,0) 82%), url('assets/hero-articles-v2.png'); background-position: center; background-size: cover; }
+    .journal-hero.section-hero .shell.journal-hero__content { width: min(690px, calc(100% - 64px)); margin: 0 0 0 clamp(32px, 8vw, 164px); padding: 0; }
+    .journal-hero.section-hero h1 { margin: 20px 0; font-size: clamp(44px, 4.6vw, 64px); line-height: 1.04; }
+    .journal-hero.section-hero p { max-width: 590px; }
+    .journal-content { padding: 104px 0 104px; }
+    .journal-content .content { padding: 0; }
+    .journal-intro { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 52px; }
+    .journal-intro h2 { max-width: 570px; margin: 0; font-size: clamp(38px, 4vw, 52px); line-height: 1.02; letter-spacing: -.04em; }
+    .journal-intro p { max-width: 405px; margin: 0; color: #66736b; line-height: 1.65; }
+    .editorial-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 1050px; column-gap: 60px; row-gap: 48px; }
+    .editorial-card { display: block; min-width: 0; padding-bottom: 20px; color: #173025; border-bottom: 1px solid rgba(20,48,39,.14); cursor: pointer; transition: transform 420ms cubic-bezier(.22,.61,.36,1), box-shadow 420ms cubic-bezier(.22,.61,.36,1), border-color 420ms cubic-bezier(.22,.61,.36,1); }
+    .editorial-card__image { overflow: hidden; aspect-ratio: 16 / 9; background: #d4d0c7; }
+    .editorial-card__image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 420ms cubic-bezier(.22,.61,.36,1); }
+    .editorial-card__meta { margin: 17px 0 10px; color: #9b7143; font: 600 10px/1.35 Manrope, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+    .editorial-card__heading { display: flex; align-items: baseline; justify-content: space-between; gap: 22px; }
+    .editorial-card h3 { margin: 0; color: #173025; font-size: clamp(26px, 2.1vw, 32px); line-height: 1.05; letter-spacing: -.035em; transition: color 420ms cubic-bezier(.22,.61,.36,1); }
+    .editorial-card__arrow { flex: 0 0 auto; color: #9b7143; font: 400 28px/1 Georgia, serif; transition: transform 420ms cubic-bezier(.22,.61,.36,1); }
+    .editorial-card__description { max-width: 620px; margin: 12px 0 0; color: #6c776f; font-size: 14px; line-height: 1.58; }
+    .editorial-card--featured { grid-column: auto; display: block; }
+    .editorial-card--featured .editorial-card__copy { padding: 0; }
+    .editorial-card:hover { transform: translateY(-4px); border-color: #b98c55; box-shadow: 0 14px 24px rgba(19,42,30,.07); }
+    .editorial-card:hover .editorial-card__image img { transform: scale(1.02); }
+    .editorial-card:hover h3 { color: #9b7143; }
+    .editorial-card:hover .editorial-card__arrow { transform: translateX(6px); }
+    @media (max-width: 800px) {
+      .top { height: auto; }
+      .top .nav { height: auto; min-height: 70px; }
+      .journal-hero.section-hero { min-height: 410px; height: auto; padding: 0; background-position: 61% center; background-image: linear-gradient(90deg, rgba(4,34,24,.97) 0%, rgba(7,42,30,.92) 58%, rgba(7,42,30,.52) 100%), url('assets/hero-articles-v2.png'); }
+      .journal-hero .shell { width: 100%; padding: 0 20px; }
+      .journal-hero.section-hero .shell.journal-hero__content { width: auto; max-width: 620px; margin: 0 20px; padding: 0; }
+      .journal-hero__label { font-size: 10px; }
+      .journal-hero.section-hero h1 { font-size: clamp(40px, 10vw, 52px); }
+      .journal-hero p { margin-top: 25px; font-size: 16px; }
+      .journal-content { padding: 72px 0 84px; }
+      .journal-intro { display: block; margin-bottom: 39px; }
+      .journal-intro p { margin-top: 20px; }
+      .editorial-grid { grid-template-columns: 1fr; row-gap: 38px; }
+      .editorial-card--featured { grid-column: auto; display: block; }
+      .editorial-card--featured .editorial-card__copy { padding: 0; }
+      .editorial-card h3 { font-size: 30px; }
+    }
+  </style>
+<script src="site-header.js" defer></script></head>
+<body>
+  <header class="top site-header"><div class="shell nav"><a class="brand" href="index.html">Евро<span>‑</span>Сруб</a><nav class="site-nav" aria-label="Основная навигация"><a href="catalog.html">Проекты</a><a href="services.html">Услуги</a><a href="works.html">Работы</a><a href="articles.html" aria-current="page">Статьи</a><a href="about.html">О компании</a><a href="contacts.html">Контакты</a><span class="site-nav__indicator" aria-hidden="true"></span></nav><a class="phone" href="tel:+79066092055">8 906 609 20 55</a></div></header>
+
+  <section class="journal-hero section-hero section-hero--articles">
+    <div class="shell journal-hero__content">
+      <div class="journal-hero__label">Журнал Евро-Сруб</div>
+      <h1>Дерево, технологии<br>и дом, который<br>служит долго</h1>
+      <p>Практические материалы для тех, кто хочет понимать дом до начала строительства и принимать взвешенные решения.</p>
+    </div>
+  </section>
+
+  <main class="shell journal-content">
+    <div class="crumbs">Главная / Статьи</div>
+    <section class="content">
+      <div class="journal-intro"><h2>Статьи — часть выбора,<br>а не архив</h2><p>Основные темы действующего сайта сохранены и переведены в удобные полноценные материалы с переходами к проектам и услугам.</p></div>
+      <div class="editorial-grid">
+        <a class="editorial-card" href="article-bath.html"><div class="editorial-card__image"><img src="assets/article-bath-cover.png" alt="Баня из бруса"></div><div class="editorial-card__meta">Бани · Руководство · 6 мин</div><div class="editorial-card__heading"><h3>Баня из бруса</h3><span class="editorial-card__arrow" aria-hidden="true">→</span></div><p class="editorial-card__description">О материале, планировке и ключевых решениях для тёплой бани из натуральной древесины.</p></a>
+        <a class="editorial-card" href="article-russian-bath.html"><div class="editorial-card__image"><img src="assets/article-russian-bath-cover.png" alt="Русская деревянная баня"></div><div class="editorial-card__meta">Бани · Традиции · 5 мин</div><div class="editorial-card__heading"><h3>Русская деревянная баня для души</h3><span class="editorial-card__arrow" aria-hidden="true">→</span></div><p class="editorial-card__description">Как устроена традиционная баня, из чего складываются её атмосфера, тепло и культура отдыха.</p></a>
+        <a class="editorial-card" href="article-winter.html"><div class="editorial-card__image"><img src="assets/article-winter-cover.png" alt="Зимнее строительство деревянного дома"></div><div class="editorial-card__meta">Строительство · Сезон · 7 мин</div><div class="editorial-card__heading"><h3>Строим дом зимой</h3><span class="editorial-card__arrow" aria-hidden="true">→</span></div><p class="editorial-card__description">Особенности зимнего строительства, свойства древесины и условия, которые важно учесть на участке.</p></a>
+        <a class="editorial-card" href="article-material.html"><div class="editorial-card__image"><img src="assets/article-material-cover.png" alt="Материал для деревянного дома"></div><div class="editorial-card__meta">Материалы · Выбор · 6 мин</div><div class="editorial-card__heading"><h3>Выбираем материал для строительства дома</h3><span class="editorial-card__arrow" aria-hidden="true">→</span></div><p class="editorial-card__description">Сравниваем хвойную древесину и разбираем, на что смотреть до начала строительства.</p></a>
+        <a class="editorial-card" href="article-logging.html"><div class="editorial-card__image"><img src="assets/article-logging-cover.png" alt="Рубка леса для строительства"></div><div class="editorial-card__meta">Древесина · Заготовка · 5 мин</div><div class="editorial-card__heading"><h3>Выбор момента для рубки леса</h3><span class="editorial-card__arrow" aria-hidden="true">→</span></div><p class="editorial-card__description">Почему происхождение и подготовка леса важны для качества будущего сруба.</p></a>
+        <a class="editorial-card" href="article-foundation.html"><div class="editorial-card__image"><img src="assets/article-foundation-cover.png" alt="Фундамент деревянного дома"></div><div class="editorial-card__meta">Строительство · Основание · 7 мин</div><div class="editorial-card__heading"><h3>Фундамент</h3><span class="editorial-card__arrow" aria-hidden="true">→</span></div><p class="editorial-card__description">Грунт, типы оснований и детали, от которых зависит надёжность деревянного дома.</p></a>
+        <a class="editorial-card editorial-card--featured" href="article-caulk.html"><div class="editorial-card__image"><img src="assets/article-caulk-cover.png" alt="Конопатка деревянного дома"></div><div class="editorial-card__copy"><div class="editorial-card__meta">Отделка · Технология · 6 мин</div><div class="editorial-card__heading"><h3>Конопатка деревянного дома</h3><span class="editorial-card__arrow" aria-hidden="true">→</span></div><p class="editorial-card__description">Когда приступать к утеплению межвенцовых швов, какие материалы применяют и как сохранить тепло дома.</p></div></a>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="shell"><span>Евро‑Сруб · Дома, бани и строительство из дерева</span><a href="index.html">На главную</a></div></footer>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Фоторепортаж — Евро‑Сруб</title>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="report-detail.css">
+<script src="site-header.js" defer></script></head>
+<body>
+  <header class="top site-header"><div class="shell nav"><a class="brand" href="index.html">Евро<span>‑</span>Сруб</a><nav class="site-nav" aria-label="Основная навигация"><a href="catalog.html">Проекты</a><a href="services.html">Услуги</a><a href="works.html" aria-current="page">Работы</a><a href="articles.html">Статьи</a><a href="about.html">О компании</a><a href="contacts.html">Контакты</a><span class="site-nav__indicator" aria-hidden="true"></span></nav><a class="phone" href="tel:+79066092055">8 906 609 20 55</a></div></header>
+
+  <main class="shell report-page">
+    <div class="crumbs"><a href="index.html">Главная</a> / <a href="works.html">Фоторепортажи</a> / <span id="crumb">Объект</span></div>
+    <section class="report-case-hero" id="reportHero">
+      <div class="report-case-intro">
+        <div class="report-kicker" id="number">Фоторепортаж · №01</div>
+        <h1 id="title">Объект Евро‑Сруб</h1>
+        <div class="report-location" id="location"></div>
+      </div>
+      <figure class="report-media">
+        <img class="report-main-image" id="heroImage" src="" alt="">
+        <figcaption class="report-media-meta"><span id="photoCaption">Фотография объекта из архива Евро‑Сруб</span><span class="report-media-controls"><b id="photoCounter">01 / 01</b><button type="button" id="previousPhoto" aria-label="Предыдущая фотография">‹</button><button type="button" id="nextPhoto" aria-label="Следующая фотография">›</button></span></figcaption>
+      </figure>
+      <div class="report-case-data">
+        <div class="report-facts" id="heroFacts"></div>
+        <p class="report-lead" id="lead"></p>
+        <div class="report-actions"><a class="report-button" href="contacts.html">Обсудить похожий дом</a><a class="report-photo-link" id="photoLink" href="#gallery">Смотреть фотографии</a></div>
+      </div>
+    </section>
+
+    <section class="report-about">
+      <div>
+        <div class="case-label">Об объекте</div>
+        <h2 id="aboutTitle">История объекта</h2>
+        <p id="aboutText"></p>
+        <div class="report-stats" id="stats"></div>
+      </div>
+      <div class="report-side-gallery" id="sideGallery" aria-label="Фотографии объекта"></div>
+    </section>
+
+    <section class="report-gallery" id="gallery">
+      <div class="case-label">Галерея объекта</div>
+      <h2 id="galleryTitle">Фотографии строительства</h2>
+      <p class="report-gallery__lead" id="galleryLead"></p>
+      <div class="report-gallery-grid" id="galleryGrid"></div>
+    </section>
+
+    <section class="report-cta">
+      <div><div class="case-label">Ваш объект</div><h2>Хотите похожее решение?</h2><p>Покажите проект или пришлите пример — уточним материал, размеры и состав работ.</p></div>
+      <a class="report-button" href="contacts.html">Обсудить проект</a>
+    </section>
+
+    <section class="report-similar" aria-labelledby="similarTitle">
+      <div class="case-label">Другие объекты</div>
+      <h2 id="similarTitle">Похожие фоторепортажи</h2>
+      <div class="report-similar__grid" id="similarGrid"></div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="shell"><span>Евро‑Сруб · архив работ</span><a href="works.html">Все фоторепортажи</a></div></footer>
+
+  <script src="reports-data.js"></script>
+  <script>
+    const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+    const esc=value=>String(value||'').replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+    const icon={
+      pin:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29s9-8 9-16a9 9 0 1 0-18 0c0 8 9 16 9 16Z"></path><circle cx="16" cy="13" r="3"></circle></svg>',
+      wood:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 9h22v14H5z"></path><path d="M9 9v14M23 9v14M5 16h22"></path><circle cx="9" cy="16" r="2"></circle></svg>',
+      area:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 14 16 5l11 9v13H5z"></path><path d="M12 27v-8h8v8M9 14h2M21 14h2"></path></svg>',
+      project:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 8h22v16H5z"></path><path d="M9 12h14M9 16h14M9 20h8"></path></svg>',
+      photo:'<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="24" height="20"></rect><circle cx="12" cy="13" r="2"></circle><path d="m6 23 7-7 5 5 3-3 5 5"></path></svg>'
+    };
+    const requestedReport=new URLSearchParams(location.search).get('report');
+    const number=clamp(Number(requestedReport??location.hash.slice(1))||0,0,EURO_REPORTS.length-1);
+    const report=EURO_REPORTS[number];
+    const title=report[0];
+    const details=report[1]||'';
+    const category=report[2];
+    const sourcePhotos=Array.isArray(report[5])&&report[5].length?report[5]:[report[3]];
+    /* The official report cover is the finished / most representative object view.
+       Put it first, while keeping every original gallery photo available below. */
+    const coverPhoto=report[3]||sourcePhotos[0];
+    const photos=[coverPhoto,...sourcePhotos.filter(photo=>photo!==coverPhoto)];
+    const meta=details.split(' · ').map(item=>item.trim()).filter(Boolean);
+    const region=meta.shift()||'';
+    const place=meta.shift()||'';
+    const locationTitle=[region,place].filter(Boolean).join(' · ');
+    const detail=meta.join(' · ');
+    const material=()=>{
+      const size=details.match(/\d+(?:[,.]\d+)?\s*×\s*\d+(?:[,.]\d+)?\s*мм/i)?.[0];
+      if(/строганн.*сруб/i.test(details))return 'Строганный сруб ручной рубки';
+      if(/бревенчат/i.test(details))return 'Бревенчатый сруб';
+      if(/оцилиндрован/i.test(details))return 'Оцилиндрованное бревно';
+      if(/сруб из бревна/i.test(details))return 'Сруб из бревна';
+      if(/профилирован/i.test(details)&&/брус/i.test(details))return size?`Профилированный брус ${size}`:'Профилированный брус';
+      if(/брус/i.test(details))return size?`Брус ${size}`:'Брус';
+      return '';
+    };
+    const dimensions=details.match(/\d+(?:[,.]\d+)?\s*×\s*\d+(?:[,.]\d+)?\s*м(?!м)/i)?.[0]||'';
+    const area=details.match(/\d+(?:[,.]\d+)?\s*м²/i)?.[0]||'';
+    const project=/(проект предоставил заказчик|проект заказчика)/i.test(details)?'Проект заказчика':(details.match(/проект\s+[ДБ]-\d+/i)?.[0]||'');
+    const work=/доработк/i.test(title+details)?'Доработка объекта':/установка/i.test(title+details)?'Установка дома':'';
+    const facts=[
+      ['Материал',material(),'wood'],['Площадь',area,'area'],['Габариты',dimensions,'area'],['Проект',project,'project'],['Работы',work,'project']
+    ].filter(([,value])=>value);
+    const createFact=([label,value,type])=>`<div class="report-fact">${icon[type]}<div><small>${esc(label)}</small><b>${esc(value)}</b></div></div>`;
+    const createStat=([label,value,type])=>`<div class="report-stat">${icon[type]}<div><b>${esc(value)}</b><span>${esc(label)}</span></div></div>`;
+    const locationIcon=icon.pin;
+    document.title=`${title} — фоторепортаж Евро‑Сруб`;
+    document.querySelector('#crumb').textContent=title;
+    document.querySelector('#number').textContent=`ФОТОРЕПОРТАЖ · №${String(number+1).padStart(2,'0')}`;
+    document.querySelector('#title').textContent=title;
+    document.querySelector('#location').innerHTML=locationTitle?`${locationIcon}<span class="report-location__copy"><b>${esc(locationTitle)}</b>${detail?`<span>${esc(detail)}</span>`:''}</span>`:'';
+    const heroFactItems=facts.filter(([label])=>label==='Материал'||label==='Габариты').slice(0,2);
+    const heroFacts=document.querySelector('#heroFacts');
+    heroFacts.innerHTML=heroFactItems.map(createFact).join('');
+    heroFacts.hidden=!heroFactItems.length;
+    document.querySelector('#lead').textContent=[place,detail].filter(Boolean).join(' · ')||details;
+    document.querySelector('#photoLink').textContent=`Смотреть ${photos.length} ${photos.length===1?'фотографию':'фотографий'}`;
+    document.querySelector('#aboutTitle').textContent=region?`${title} в ${region}`:title;
+    document.querySelector('#aboutText').textContent=details;
+    const stats=[
+      ['общая площадь',area,'area'],['материал стен',material(),'wood'],['место строительства',locationTitle,'pin'],['в полном фоторепортаже',`${photos.length} фото`,'photo']
+    ].filter(([,value])=>value);
+    document.querySelector('#stats').innerHTML=stats.map(createStat).join('');
+    document.querySelector('#galleryTitle').textContent=`Фотографии объекта: ${title}`;
+    document.querySelector('#galleryLead').textContent=`В архиве — ${photos.length} ${photos.length===1?'оригинальная фотография':'оригинальных фотографий'} этого объекта.`;
+    const galleryGrid=document.querySelector('#galleryGrid');
+    galleryGrid.innerHTML=photos.map((src,index)=>`<button class="report-gallery-card" type="button" data-gallery-index="${index}" aria-label="Показать фото ${index+1}: ${esc(title)}"><img src="${esc(src)}" alt="${esc(title)} — фото ${index+1}" loading="lazy" referrerpolicy="no-referrer"></button>`).join('');
+    document.querySelector('#sideGallery').innerHTML=photos.slice(1,4).map((src,index)=>`<img src="${esc(src)}" alt="${esc(title)} — фото ${index+2}" loading="lazy" referrerpolicy="no-referrer">`).join('')||`<img src="${esc(photos[0])}" alt="${esc(title)}" loading="lazy" referrerpolicy="no-referrer">`;
+    let activePhoto=0;
+    const heroImage=document.querySelector('#heroImage');
+    const updateHeroPhoto=()=>{heroImage.src=photos[activePhoto];heroImage.alt=`${title} — фото ${activePhoto+1}`;document.querySelector('#photoCounter').textContent=`${String(activePhoto+1).padStart(2,'0')} / ${String(photos.length).padStart(2,'0')}`};
+    document.querySelector('#previousPhoto').addEventListener('click',()=>{activePhoto=(activePhoto-1+photos.length)%photos.length;updateHeroPhoto()});
+    document.querySelector('#nextPhoto').addEventListener('click',()=>{activePhoto=(activePhoto+1)%photos.length;updateHeroPhoto()});
+    galleryGrid.addEventListener('click',event=>{const card=event.target.closest('[data-gallery-index]');if(!card)return;activePhoto=Number(card.dataset.galleryIndex);updateHeroPhoto();document.querySelector('#reportHero').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
+    updateHeroPhoto();
+    const related=EURO_REPORTS.map((item,index)=>({item,index})).filter(entry=>entry.index!==number&&entry.item[2]===category).slice(0,3);
+    document.querySelector('#similarGrid').innerHTML=related.map(({item,index})=>{const info=(item[1]||'').split(' · ')[0];const image=(item[5]&&item[5][0])||item[3];return `<a class="report-similar-card" href="report.html?report=${index}#reportHero"><img src="${esc(image)}" alt="${esc(item[0])}" loading="lazy" referrerpolicy="no-referrer"><small>${esc(info)}</small><h3>${esc(item[0])}</h3><p>${esc((item[1]||'').split(' · ').slice(1).join(' · '))}</p><span>Смотреть проект</span></a>`}).join('');
+  </script>
+</body>
+</html>
